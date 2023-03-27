@@ -1,0 +1,9 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+<ul>
+    {% for t in top%}
+    <h3>{{ t.pk }} - {{ t.title }}</h3>
+    {% endfor%}
+</ul>
+{% endblock %}
