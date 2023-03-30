@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import title, about, goroot, login, addpage, contact, show_post
+from .views import title, about, goroot, login, addpage, contact, show_post, show_category
 
 
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('login/', login, name='login'),
     path('post/<int:post_id>/', show_post, name='post'),
+    path('category/<int:cat_id>/', show_category, name='category'),
     re_path(r'.*root/$', goroot)
 ]
 
