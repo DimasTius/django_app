@@ -1,4 +1,5 @@
 {% load static %}
+{% load men_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,13 +16,7 @@
 		<div class="header">
 			<ul id="mainmenu" class="mainmenu">
 			<li class="logo"><a href="{% url 'root' %}"><div class="logo"></div></a></li>
-{% for m in menu %}
-	{% if not forloop.last %}
-			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-	{% else %}
-			<li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-	{% endif %}
-{% endfor %}
+				{% show_menu %}
 			</ul>
 			<div class="clear"></div>
 		</div>
@@ -38,14 +33,7 @@
 		{% else %}
 			<li><a href="{% url 'root' %}">Все категории</a></li>
 		{% endif %}
-
-		{% for c in cats %}
-			{% if c.pk == cat_selected %}
-				<li class="selected">{{c.name}}</li>
-			{% else %}
-				<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
-			{% endif %}
-		{% endfor %}
+		{% show_categories cat_selected=cat_selected%}
 	</ul>
 </td>
 <!-- Конец Sidebar'а -->

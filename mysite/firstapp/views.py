@@ -2,31 +2,22 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from firstapp.models import men, Category
 
-menu = [
-    {'title': 'О сайте', 'url_name': 'about'},
-    {'title': 'Добавить статью', 'url_name': 'add_page'},
-    {'title': 'Обратная связь', 'url_name': 'contact'},
-    {'title': 'Войти', 'url_name': 'login'}
-]
 
 # Create your views here.
 
 
 def title(request):
     ps = men.objects.all()
-    cats = Category.objects.all()
     context = {
         'title': 'Главная страница',
-        'menu': menu,
         'top': ps,
-        'cats': cats,
         'cat_selected': 0
     }
     return render(request, 'firstapp/index.html', context=context)
 
 
 def about(request):
-    return render(request, 'firstapp/about.html', {'title': 'О сайте', 'menu': menu})
+    return render(request, 'firstapp/about.html', {'title': 'О сайте'})
 
 
 def goroot(request):
@@ -50,14 +41,11 @@ def show_post(request, post_id):
 
 def show_category(request, cat_id):
     ps = men.objects.filter(cat_id=cat_id)
-    cats = Category.objects.all()
     if len(ps) == 0:
         raise Http404
     context = {
         'title': 'Отображение по рубрикам',
-        'menu': menu,
         'top': ps,
-        'cats': cats,
         'cat_selected': cat_id
     }
     return render(request, 'firstapp/index.html', context=context)
