@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from firstapp.models import men, Category
+from .forms import AddPostForm
 
 
 # Create your views here.
@@ -25,7 +26,18 @@ def goroot(request):
 
 
 def addpage(request):
-    return HttpResponse('Добавьте статью')
+    if request.method == 'POST':
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            #print(form.cleaned_data)
+            try:
+                men.objects.create(**form.cleaned_data)
+                return redirect('root')
+            except:
+                form.add_error(None, 'Ошибка добавления поста')
+    else:
+        form = AddPostForm()
+    return render(request, 'firstapp/addpage.html', {'title': 'Добавление статьи', 'form': form})
 
 
 def contact(request):
